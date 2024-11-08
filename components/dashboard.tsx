@@ -294,7 +294,7 @@ export function Dashboard() {
               <CardTitle className="flex items-center justify-between text-xl">
                 <span>{child.name}</span>
                 <Badge variant="secondary" className="text-lg">
-                  <Star className="ml-1 h-4 w-4" /> {child.points}
+                  <Star className="ml-1 h-4 w-4 text-yellow-400" fill="currentColor" /> {child.points}
                 </Badge>
               </CardTitle>
             </CardHeader>
