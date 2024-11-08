@@ -77,6 +77,7 @@ const colorSchemes: ColorSchemes = {
     button: "bg-blue-500",
     progress: "bg-blue-500",
   },
+  
   sunset: {
     background: "from-orange-50 to-red-50",
     cardHeader: ["bg-orange-500", "bg-red-500", "bg-yellow-500"],
