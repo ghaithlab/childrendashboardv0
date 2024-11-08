@@ -19,7 +19,7 @@ const children = [
   {
     name: "بنان",
     avatar: "/images/benan.png",
-    points: 1400,
+    points: 1100,
     skills: ["الكتابة", "الفنون", "القيادة"],
     gifts: [
       { name: "أدوات رسم", progress: 90 },
@@ -30,7 +30,7 @@ const children = [
   {
     name: "حمزة",
     avatar: "/images/hamza.png",
-    points: 980,
+    points: 1500,
     skills: ["الرياضة", "العلوم", "الحاسوب"],
     gifts: [
       { name: "كرة قدم", progress: 60 },
@@ -312,7 +312,7 @@ export function Dashboard() {
               
             <div className="flex justify-center mb-8 relative">
                 {child.points === getHighestScore(children) && (
-                  <Crown className="absolute -top-4 left-1/2 transform -translate-x-1/2 h-8 w-8 text-yellow-500 z-10" />
+                  <Crown className="absolute -top-7 left-1/2 transform -translate-x-1/2 h-10 w-10 text-yellow-400 drop-shadow-lg" fill="currentColor" />
                 )}                <Image
                   src={child.avatar}
                   alt={`صورة ${child.name}`}
