@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Book, Gift, Star, Trophy, Palette } from "lucide-react"
+import { Book, Gift, Star, Trophy, Palette,Crown } from "lucide-react"
 import Image from 'next/image'
 import { Noto_Kufi_Arabic } from 'next/font/google'
 
@@ -15,16 +15,18 @@ const notoKufiArabic = Noto_Kufi_Arabic({
 })
 
 const children = [
+  
   {
-    name: "سارة",
-    avatar: "/images/sare.png",
-    points: 1250,
-    skills: ["الرسم", "القراءة", "الموسيقى"],
+    name: "بنان",
+    avatar: "/images/benan.png",
+    points: 1400,
+    skills: ["الكتابة", "الفنون", "القيادة"],
     gifts: [
-      { name: "دمية", progress: 75 },
-      { name: "كتب قصص", progress: 40 },
+      { name: "أدوات رسم", progress: 90 },
+      { name: "مجموعة كتب", progress: 50 },
     ]
   },
+  
   {
     name: "حمزة",
     avatar: "/images/hamza.png",
@@ -36,13 +38,13 @@ const children = [
     ]
   },
   {
-    name: "بنان",
-    avatar: "/images/benan.png",
-    points: 1100,
-    skills: ["الكتابة", "الفنون", "القيادة"],
+    name: "سارة",
+    avatar: "/images/sare.png",
+    points: 1250,
+    skills: ["الرسم", "القراءة", "الموسيقى"],
     gifts: [
-      { name: "أدوات رسم", progress: 90 },
-      { name: "مجموعة كتب", progress: 50 },
+      { name: "دمية", progress: 75 },
+      { name: "كتب قصص", progress: 40 },
     ]
   }
 ]
@@ -108,6 +110,10 @@ interface SparklesProps {
   isActive: boolean
 }
 
+const getHighestScore = (children: { points: number }[]) => {
+  return Math.max(...children.map(child => child.points))
+}
+
 const Sparkles = ({ isActive }: SparklesProps) => {
   const [sparkles, setSparkles] = useState<Array<{top: number, right: number, delay: number}>>([]);
 
@@ -158,7 +164,9 @@ const Bubble = ({ size, color, duration, delay, position }: BubbleProps) => (
       animationDelay: `${delay}s`,
       top: position.top,
       right: position.right,
-    }}
+      '--tx': `${Math.random() * 200 - 150}px`,
+      '--ty': `${Math.random() * 200 - 150}px`,
+    } as React.CSSProperties}
   />
 )
 
@@ -176,11 +184,11 @@ const BubbleBackground = ({ bubbleColors }: BubbleBackgroundProps) => {
   }>>([]);
 
   useEffect(() => {
-    const newBubbles = Array(20).fill(null).map(() => ({
-      size: `${Math.random() * 100 + 50}px`,
+    const newBubbles = Array(40).fill(null).map(() => ({
+      size: `${Math.random() * 150 + 20}px`,
       color: bubbleColors[Math.floor(Math.random() * bubbleColors.length)],
       duration: Math.random() * 5 + 5,
-      delay: Math.random() * 10,
+      delay: Math.random() * 1,
       position: {
         top: `${Math.random() * 100}%`,
         right: `${Math.random() * 100}%`,
@@ -276,8 +284,9 @@ export function Dashboard() {
           animation: sparkle 0.8s ease-in-out infinite;
         }
         @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
+          0% { transform: translate(0, 0) rotate(0deg); }
+          50% { transform: translate(var(--tx), var(--ty)) rotate(360deg); }
+          100% { transform: translate(0, 0) rotate(0deg); }
         }
       `}</style>
       <BubbleBackground bubbleColors={currentScheme.bubbles} />
@@ -300,8 +309,11 @@ export function Dashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-8">
-              <div className="flex justify-center mb-8">
-                <Image
+              
+            <div className="flex justify-center mb-8 relative">
+                {child.points === getHighestScore(children) && (
+                  <Crown className="absolute -top-4 left-1/2 transform -translate-x-1/2 h-8 w-8 text-yellow-500 z-10" />
+                )}                <Image
                   src={child.avatar}
                   alt={`صورة ${child.name}`}
                   width={150}
